@@ -1,10 +1,10 @@
 # Fdb version 4
-["pdflatex"] 1770262814.09133 "/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex" "report.pdf" "report" 1770262817.2812 0
+["pdflatex"] 1770263493.81017 "/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex" "report.pdf" "report" 1770263496.73167 0
   "../plots/plot_efficiency.png" 1770259833.75595 250118 4fb79189fe4e60f44f72acfd16dc2343 ""
   "../plots/plot_phase_breakdown.png" 1770259834.89303 581920 adb9760984e0dcedd1b8fb00a942d91d ""
   "../plots/plot_speedup_processors.png" 1770259833.5965 358490 90e6d54aff5ccb5000ecc412e07ca185 ""
   "../plots/plot_speedup_vs_ideal.png" 1770259833.99634 206468 d0e33faa520398e5647413dd6d2e3194 ""
-  "/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex" 1770262813.86225 13131 6f434ae066bf68da449b1845252394aa ""
+  "/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex" 1770263493.62017 13161 72d0b8d68fd75b9c521f36f7b2b7a5d9 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -82,9 +82,9 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1759375292 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "report.aux" 1770262817.21951 3723 fc906ac52944b7f665d8a06cb778fec2 "pdflatex"
-  "report.out" 1770262817.22008 2575 f9974805a19ea331e1de39ab4856d62b "pdflatex"
-  "report.tex" 1770262813.86225 13131 6f434ae066bf68da449b1845252394aa ""
+  "report.aux" 1770263496.67934 3723 fc906ac52944b7f665d8a06cb778fec2 "pdflatex"
+  "report.out" 1770263496.67994 2575 f9974805a19ea331e1de39ab4856d62b "pdflatex"
+  "report.tex" 1770263493.62017 13161 72d0b8d68fd75b9c521f36f7b2b7a5d9 ""
   (generated)
   "report.aux"
   "report.log"
