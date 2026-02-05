@@ -1,5 +1,5 @@
-\documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
+\documentclass[11pt, twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{hyperref}
@@ -8,12 +8,13 @@
 \begin{document}
 
 % Title Page
+\onecolumn
 \begin{titlepage}
     \centering
     \vspace*{2cm}
     
     {\Huge\bfseries PSRS Implementation\\[0.5cm]}
-    {\Large Parallel Sorting by Regular Sampling\\using POSIX Threads}
+    {\Large Parallel Sorting by Regular Sampling}
     
     \vspace{3cm}
     
@@ -29,7 +30,7 @@
     
     \vfill
     
-    {\large CMPUT 481 -- Parallel and Distributed Computing}
+    {\large CMPUT 681: Parallel and Distributed Computing}
     
     \vspace{1cm}
     
@@ -37,129 +38,276 @@
     
 \end{titlepage}
 
+\twocolumn
+
 \section{Introduction}
 
-This report documents my experience implementing the Parallel Sorting by Regular Sampling (PSRS) algorithm using POSIX threads. Rather than describing the algorithm itself, which is well-documented in the original 1993 paper, I focus on the practical challenges encountered during implementation and the insights gained from experimentation. The implementation was developed on macOS, which introduced several platform-specific complications that required creative solutions.
+\textbf{Thesis:} Through implementing and experimenting with PSRS, I discovered that \textit{Phase 4 (merge) does not scale with parallelism}---its execution time actually \textit{increases} with thread count, unlike the other phases. While Phase 1 (local sort) speeds up as expected with more threads, Phase 4's cost grows because each thread must merge p partitions from all other threads. At p=128, Phase 4 accounts for 73\% of total execution time (11.07s of 15.03s for 164M elements), making it the fundamental scalability bottleneck in PSRS.
 
-\section{Implementation Journey}
+\section{Implementation Notes}
 
-\subsection{The Barrier Problem}
+The implementation uses the SPMD (Single Program Multiple Data) model where the main thread participates as worker thread 0, spawning p-1 additional threads. All threads execute the same function with different thread IDs. Four barrier synchronization points ensure correctness: after local sorting (Phase 1), after sampling (Phase 2), after partitioning (Phase 3), and after merging (Phase 4). Large arrays are heap-allocated to avoid stack overflow. For Phase 1, I used the standard library \texttt{qsort()} for local sorting. For Phase 4, I implemented a k-way merge since merging pre-sorted partitions is more efficient. Correctness was validated by verifying the output array is sorted after every run.
 
-My first major roadblock came when the code refused to compile. After some debugging, I discovered that macOS does not provide a native implementation of \texttt{pthread\_barrier\_t}, which is part of the optional POSIX Threads extensions. This was frustrating because barriers are essential for coordinating the four phases of PSRS---each thread must complete its current phase before any thread can proceed to the next.
+\section{Experimental Setup}
 
-I initially considered using multiple mutex locks, but this would have been error-prone and difficult to reason about. Instead, I implemented a custom barrier using a combination of \texttt{pthread\_mutex\_t} for mutual exclusion and \texttt{pthread\_cond\_t} for signaling. The implementation maintains a counter that tracks how many threads have reached the barrier. When the last thread arrives, it broadcasts a signal to wake all waiting threads. A generation counter prevents spurious wakeups from causing threads to proceed prematurely.
+I tested PSRS on a MacBook Air (Apple M2) with array sizes from 32M to 164M integers and thread counts from 2 to 128. Each configuration ran 7 times; I averaged the last 5 runs to reduce startup noise. All timing used \texttt{gettimeofday()} with \texttt{-O2} optimization.
 
-One subtle issue arose when I placed the barrier function definitions in a header file that was included by multiple source files. This caused duplicate symbol errors during linking. The solution was to declare the functions as \texttt{static inline}, which instructs the compiler to generate separate copies for each translation unit rather than creating globally visible symbols.
+\section{Results}
 
-\subsection{Memory Architecture Decisions}
+\subsection{Speedups Peak Then Drops}
 
-Early versions of my implementation allocated large arrays on the stack, which worked fine for small test cases but caused immediate segmentation faults when scaling to millions of elements. The stack size limit on most systems is only a few megabytes, far too small for the data structures PSRS requires.
+Figure 1 shows the central result: speedup increases from p=2 to around p=8--16, then \textit{decreases}. For 64M elements, speedup peaks at 4.25x with 16 threads (Table 2). At p=128, speedup falls to just 1.20x---barely faster than sequential. This pattern holds across all array sizes.
 
-Moving to heap allocation with \texttt{malloc()} solved the immediate problem but introduced new complexity. PSRS requires several multi-dimensional data structures: a 3D array for partitions (indexed by source thread, destination thread, and element), a 2D array for partition sizes, and arrays for samples and pivots. Managing the allocation and deallocation of these nested structures required careful attention to avoid memory leaks.
+Why does adding threads hurt performance? The phase timing data answers this question.
 
-I chose to use global variables for shared state rather than passing pointers through thread arguments. While this is not ideal from a software engineering perspective, it simplified the code considerably and made the SPMD structure more apparent. Each thread accesses the same global arrays but operates on different indices based on its thread ID.
+\subsection{Phase 4 Dominates at High Thread Counts}
 
-\subsection{The Merge Phase Mistake}
+Tables 3--8 show execution time broken down by phase. The data reveals a clear pattern:
 
-Perhaps my most instructive mistake was in Phase 4. My initial implementation simply concatenated the partitions assigned to each thread without actually merging them. The output appeared reasonable at first glance---the array was mostly sorted---but careful verification revealed that elements were out of order at partition boundaries.
+\begin{itemize}
+\item \textbf{Phase 1 (Sort)} decreases as expected---more threads means less work per thread. For 164M elements: 8.60s at p=2 drops to 2.39s at p=128.
+\item \textbf{Phase 4 (Merge)} increases dramatically. For 164M elements: 0.63s at p=2 grows to 11.07s at p=128---an 18x increase.
+\end{itemize}
 
-The fix required implementing a proper k-way merge. Each thread receives $p$ partitions (one from each thread's Phase 3 output), and these partitions are individually sorted but not sorted relative to each other. I used a min-heap to efficiently select the smallest element across all partitions at each step. This maintains the $O(n \log p)$ complexity that makes PSRS efficient.
+At p=128 with 164M elements, Phase 4 accounts for 73\% of total execution time (11.07s of 15.03s). The merge phase dominates because each thread must merge p partitions received from all other threads. More threads means more partitions to merge.
 
-This bug taught me the importance of rigorous correctness checking. I added verification code that scans the entire output array after sorting, confirming that each element is less than or equal to its successor. This check caught several subtle bugs that would have been difficult to detect through manual inspection.
+\subsection{Efficiency Collapses at Scale}
 
-\section{Performance Analysis}
+Figure 2 shows efficiency (E = Speedup/p). At p=2, efficiency is approximately 0.86--0.92 across all sizes---good utilization. At p=128, efficiency drops to 0.008--0.011. This means over 99\% of computational capacity is wasted on overhead when using 128 threads.
 
-\subsection{Understanding the Results}
+\section{Why This Matters: Lessons Learned}
 
-The speedup results reveal several interesting patterns. First, the break-even point occurs around $p=2$, where the benefits of parallelism begin to outweigh the overhead. With fewer threads, PSRS performs similar computational work as quicksort but adds overhead from thread management, barrier synchronization, and the additional merge phase.
+\subsection{More Threads Can Hurt Performance}
 
-As thread count increases, speedup improves but at a diminishing rate. With 8-16 threads, I observed speedups of approximately 4-5x rather than the ideal 8-16x. Several factors contribute to this sublinear scaling. The barrier synchronization points introduce idle time---faster threads must wait for slower ones to catch up. Memory bandwidth becomes a bottleneck as multiple threads compete for access to main memory. Additionally, the sample selection and pivot broadcasting in Phase 2 are inherently sequential operations that cannot be parallelized.
+Before this experiment, I assumed more threads would always help (or at worst, plateau). The data proves otherwise. For 96M elements, going from 32 threads (4.17x speedup) to 128 threads (1.02x speedup) makes the program \textit{4x slower}. This was my most surprising finding.
 
-Beyond 16 threads, performance actually degrades. At $p=64$ and $p=128$, the overhead of managing many threads and the increased synchronization costs outweigh any benefits from parallelism. This demonstrates that blindly adding more processors does not guarantee better performance.
+\subsection{Barriers Are Not the Bottleneck}
 
-\subsection{The Efficiency Perspective}
+I initially suspected synchronization overhead from barrier waits would limit scalability. The phase data disproves this. Phase 2 (sampling), which involves barrier synchronization and pivot selection, remains under 0.06s even at p=128. The bottleneck is computational, not synchronization.
 
-The efficiency metric provides perhaps the clearest view of scalability limitations. Efficiency, defined as speedup divided by processor count ($E = S/p$), measures how effectively each additional processor contributes to performance. Ideal efficiency would be 1.0, meaning each processor provides its full potential speedup.
+\subsection{The Optimal Thread Count Exists}
 
-In practice, efficiency drops steadily as processors are added. At $p=4$, efficiency hovers around 0.8, indicating reasonably good utilization. By $p=16$, efficiency falls to around 0.3, meaning more than two-thirds of the theoretical parallel capacity is lost to overhead. This behavior is consistent with Amdahl's Law, which states that the sequential fraction of an algorithm fundamentally limits its scalability.
+For these problem sizes on this hardware, p=8--16 consistently gives the best speedup. Beyond this, returns are not just diminishing---they become negative. This suggests that blindly maximizing thread count is counterproductive; finding the optimal p requires experimentation.
 
-Interestingly, larger array sizes show slightly better efficiency at high processor counts. This occurs because the parallel work (Phase 1 local sorting and Phase 4 merging) scales with problem size, while the sequential overhead (barrier synchronization, pivot selection) remains relatively constant.
+\subsection{Debugging Parallel Code Is Hard}
 
-\subsection{Practical Implications}
+A subtle bug in my merge implementation initially produced mostly-sorted output. The array appeared sorted on casual inspection, but full verification revealed errors. Race conditions were difficult to reproduce---a bug might appear once in 20 runs. I learned to always verify correctness programmatically, not visually.
 
-These results suggest practical guidelines for using PSRS. For the array sizes tested (32M--164M elements), using 8--16 threads provides a good balance between speedup and efficiency. Beyond 16 threads, the diminishing returns may not justify the increased resource consumption, especially in shared computing environments.
+\subsection{Phase-Level Timing Is Essential}
 
-\section{Reflections}
+Without phase-level timing, I would have blamed synchronization or load imbalance for poor scaling. The phase breakdown revealed the true culprit: merge cost. This taught me that aggregate timing hides important details; instrumenting individual phases is necessary to diagnose performance problems.
 
-Working on this project reinforced several principles that are easy to understand theoretically but harder to appreciate until encountered in practice. Synchronization is expensive---every barrier represents a point where the fastest thread waits for the slowest, wasting cycles. Platform portability requires effort---code that compiles cleanly on one Unix system may fail on another due to differences in optional POSIX extensions. Performance measurement requires discipline---single runs are unreliable, and short runs can be dominated by startup overhead rather than actual algorithm performance.
+\section{Conclusion}
 
-The SPMD programming model, once understood, provides an elegant way to structure parallel code. Each thread executes the same program but operates on different data based on its ID. The barriers serve as synchronization points that divide the program into phases, ensuring all threads have consistent views of shared data at each transition.
+My experiments demonstrate that Phase 4 (merge) is the fundamental scalability bottleneck in PSRS. Unlike Phase 1 which benefits from parallelism, Phase 4's cost grows with thread count because each thread must merge p partitions. At p=128, Phase 4 consumes 73\% of total execution time. This explains why peak speedup (4.0--4.3x) occurs at p=8--16 and degrades beyond. The key insight is that PSRS's merge phase has inherent anti-scaling behavior that limits the algorithm's parallel efficiency regardless of problem size.
 
 \section*{Acknowledgements}
 
-During implementation, I consulted ChatGPT for assistance with specific technical challenges, particularly the barrier implementation for macOS and the k-way merge algorithm. I also referenced GeeksforGeeks tutorials for refreshers on C programming concepts and the POSIX Threads documentation for understanding the threading API semantics.
+I consulted ChatGPT for help with barrier implementation and k-way merge logic. ChatGPT was also used to fix grammatical mistakes in this report. I referenced GeeksforGeeks for C programming concepts and the POSIX threads documentation.
+
+\section*{References}
+
+\begin{enumerate}
+\item Albert Armea, ``Using pthread\_barrier on Mac OS X,'' \url{https://blog.albertarmea.com/post/47089939939/using-pthreadbarrier-on-mac-os-x}
+
+\item GeeksforGeeks, ``qsort() Function in C,'' \url{https://www.geeksforgeeks.org/c/qsort-function-in-c/}
+
+\item GeeksforGeeks, ``Merge K Sorted Arrays,'' \url{https://www.geeksforgeeks.org/dsa/merge-k-sorted-arrays/}
+
+\item H. Shi and J. Schaeffer, ``Parallel Sorting by Regular Sampling,'' Journal of Parallel and Distributed Computing, vol. 14, no. 4, pp. 361-372, 1992.
+\end{enumerate}
 
 \newpage
-\section*{Experimental Results}
+\onecolumn
+\section*{Appendix}
+
+% Figures first
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/plot_speedup_processors.png}
+    \caption{Speedup vs processor count. Peak speedup occurs around p=12-16.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/plot_efficiency.png}
+    \caption{Efficiency (E=S/p) drops rapidly as processors increase.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../plots/plot_phase_breakdown.png}
+    \caption{Phase breakdown for all array sizes. Phase 4 (merge) dominates at high p.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/plot_speedup_vs_ideal.png}
+    \caption{Actual speedup vs ideal linear speedup.}
+\end{figure}
+
+\newpage
+% Tables start on new page after figures
 
 \begin{table}[H]
 \centering
-\caption{Sorting Times (in seconds)}
-\vspace{0.3cm}
-\begin{tabular}{l|rrrrrrrr}
+\caption{Execution Times (seconds)}
+\small
+\begin{tabular}{r|rrrrrrrrr}
 \toprule
-Size & seq & p2 & p4 & p8 & p12 & p16 & p32 & p64 \\
+Size & Sequential & 2 thr & 4 thr & 8 thr & 12 thr & 16 thr & 32 thr & 64 thr & 128 thr \\
 \midrule
-32M  & 3.04 & 1.67 & 0.93 & 0.75 & 0.79 & 0.73 & 0.74 & 0.95 \\
-48M  & 4.63 & 2.60 & 1.41 & 1.15 & 1.10 & 1.05 & 1.11 & 1.46 \\
-64M  & 6.23 & 3.45 & 1.89 & 1.58 & 1.49 & 1.38 & 1.51 & 1.82 \\
-96M  & 9.55 & 5.25 & 2.91 & 2.34 & 2.25 & 2.07 & 2.11 & 3.03 \\
-128M & 12.83 & 7.13 & 3.94 & 3.17 & 2.98 & 2.77 & 2.91 & 4.45 \\
-164M & 16.65 & 9.22 & 5.17 & 4.04 & 3.84 & 3.60 & 3.72 & 4.78 \\
+32M & 3.12 & 1.81 & 0.97 & 0.77 & 0.78 & 0.81 & 0.86 & 1.07 & 2.29 \\
+48M & 4.66 & 2.58 & 1.50 & 1.28 & 1.17 & 1.17 & 1.34 & 1.68 & 4.16 \\
+64M & 6.42 & 3.50 & 2.02 & 1.65 & 1.62 & 1.51 & 1.69 & 2.14 & 5.34 \\
+96M & 9.63 & 5.27 & 3.02 & 2.47 & 2.47 & 2.34 & 2.31 & 3.53 & 9.45 \\
+128M & 13.02 & 7.30 & 4.15 & 3.48 & 3.25 & 3.03 & 3.62 & 6.04 & 11.97 \\
+164M & 17.14 & 9.55 & 6.47 & 4.45 & 4.29 & 5.06 & 5.95 & 6.52 & 15.03 \\
+\bottomrule
+\end{tabular}
+\\[0.1cm]
+{\footnotesize \textit{Note: thr = threads}}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Speedup (relative to sequential)}
+\small
+\begin{tabular}{r|rrrrrrrr}
+\toprule
+Size & 2 thr & 4 thr & 8 thr & 12 thr & 16 thr & 32 thr & 64 thr & 128 thr \\
+\midrule
+32M & 1.72 & 3.21 & 4.07 & 4.01 & 3.87 & 3.62 & 2.91 & 1.36 \\
+48M & 1.81 & 3.11 & 3.64 & 3.97 & 3.98 & 3.47 & 2.77 & 1.12 \\
+64M & 1.83 & 3.18 & 3.90 & 3.97 & 4.25 & 3.80 & 3.00 & 1.20 \\
+96M & 1.83 & 3.19 & 3.90 & 3.90 & 4.11 & 4.17 & 2.73 & 1.02 \\
+128M & 1.78 & 3.14 & 3.74 & 4.01 & 4.30 & 3.60 & 2.16 & 1.09 \\
+164M & 1.79 & 2.65 & 3.85 & 3.99 & 3.38 & 2.88 & 2.63 & 1.14 \\
+\bottomrule
+\end{tabular}
+\\[0.1cm]
+{\footnotesize \textit{Note: thr = threads}}
+\end{table}
+
+% Phase tables - one per row
+\begin{table}[H]
+\centering
+\caption{Phase Times: n=32M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
+\toprule
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
+\midrule
+2 & 1.62 & $<$0.01 & 0.04 & 0.13 & 1.81 \\
+4 & 0.79 & $<$0.01 & 0.02 & 0.14 & 0.97 \\
+8 & 0.45 & $<$0.01 & 0.03 & 0.27 & 0.77 \\
+12 & 0.44 & $<$0.01 & 0.04 & 0.24 & 0.78 \\
+16 & 0.40 & 0.01 & 0.04 & 0.21 & 0.81 \\
+32 & 0.39 & 0.01 & 0.08 & 0.25 & 0.86 \\
+64 & 0.19 & 0.01 & 0.13 & 0.44 & 1.07 \\
+128 & 0.04 & 0.01 & 0.26 & 1.53 & 2.29 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Speedup (relative to sequential qsort)}
-\vspace{0.3cm}
-\begin{tabular}{l|rrrrrrrr}
+\caption{Phase Times: n=48M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
 \toprule
-Size & p2 & p4 & p8 & p12 & p16 & p32 & p64 & p128 \\
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
 \midrule
-32M  & 1.83 & 3.28 & 4.04 & 3.87 & 4.18 & 4.09 & 3.19 & 1.65 \\
-48M  & 1.78 & 3.29 & 4.02 & 4.21 & 4.40 & 4.19 & 3.18 & 1.51 \\
-64M  & 1.81 & 3.30 & 3.95 & 4.19 & 4.53 & 4.13 & 3.42 & 1.55 \\
-96M  & 1.82 & 3.28 & 4.08 & 4.25 & 4.62 & 4.52 & 3.15 & 1.54 \\
-128M & 1.80 & 3.26 & 4.05 & 4.30 & 4.64 & 4.40 & 2.88 & 1.31 \\
-164M & 1.81 & 3.22 & 4.12 & 4.33 & 4.63 & 4.47 & 3.49 & 1.24 \\
+2 & 2.31 & $<$0.01 & 0.06 & 0.19 & 2.58 \\
+4 & 1.20 & $<$0.01 & 0.03 & 0.24 & 1.50 \\
+8 & 0.72 & $<$0.01 & 0.03 & 0.50 & 1.28 \\
+12 & 0.68 & $<$0.01 & 0.04 & 0.40 & 1.17 \\
+16 & 0.67 & 0.01 & 0.04 & 0.35 & 1.17 \\
+32 & 0.69 & 0.01 & 0.09 & 0.41 & 1.34 \\
+64 & 0.45 & 0.02 & 0.18 & 0.74 & 1.68 \\
+128 & 0.27 & 0.04 & 0.31 & 3.02 & 4.16 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{../plots/plot_speedup_processors.png}
-    \caption{Speedup vs processor count for all tested array sizes.}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Phase Times: n=64M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
+\toprule
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
+\midrule
+2 & 3.16 & $<$0.01 & 0.08 & 0.24 & 3.50 \\
+4 & 1.63 & $<$0.01 & 0.04 & 0.31 & 2.02 \\
+8 & 0.99 & $<$0.01 & 0.04 & 0.58 & 1.65 \\
+12 & 0.97 & 0.01 & 0.05 & 0.53 & 1.62 \\
+16 & 0.93 & $<$0.01 & 0.10 & 0.42 & 1.51 \\
+32 & 0.88 & 0.01 & 0.10 & 0.58 & 1.69 \\
+64 & 0.64 & 0.02 & 0.17 & 0.97 & 2.14 \\
+128 & 0.54 & $<$0.01 & 0.40 & 3.87 & 5.34 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.85\textwidth]{../plots/plot_efficiency.png}
-    \caption{Parallel efficiency (Speedup/p) showing diminishing returns as processors increase.}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Phase Times: n=96M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
+\toprule
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
+\midrule
+2 & 4.75 & $<$0.01 & 0.12 & 0.36 & 5.27 \\
+4 & 2.46 & $<$0.01 & 0.08 & 0.43 & 3.02 \\
+8 & 1.59 & $<$0.01 & 0.06 & 0.75 & 2.47 \\
+12 & 1.54 & $<$0.01 & 0.08 & 0.77 & 2.47 \\
+16 & 1.46 & 0.01 & 0.09 & 0.68 & 2.34 \\
+32 & 1.29 & $<$0.01 & 0.13 & 0.74 & 2.31 \\
+64 & 1.19 & 0.06 & 0.24 & 1.74 & 3.53 \\
+128 & 1.15 & 0.01 & 0.62 & 7.10 & 9.45 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.95\textwidth]{../plots/plot_speedup_vs_ideal.png}
-    \caption{Comparison of achieved speedup vs ideal linear speedup for all array sizes.}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Phase Times: n=128M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
+\toprule
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
+\midrule
+2 & 6.55 & $<$0.01 & 0.16 & 0.52 & 7.30 \\
+4 & 3.37 & $<$0.01 & 0.08 & 0.61 & 4.15 \\
+8 & 2.07 & $<$0.01 & 0.08 & 1.25 & 3.48 \\
+12 & 2.02 & $<$0.01 & 0.10 & 1.02 & 3.25 \\
+16 & 1.89 & 0.01 & 0.10 & 0.92 & 3.03 \\
+32 & 2.01 & 0.01 & 0.18 & 1.25 & 3.62 \\
+64 & 2.02 & 0.02 & 0.39 & 3.17 & 6.04 \\
+128 & 1.82 & 0.01 & 0.77 & 8.78 & 11.97 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{../plots/plot_phase_breakdown.png}
-    \caption{Execution time breakdown by phase for largest array size (164M elements).}
-\end{figure}
+\begin{table}[H]
+\centering
+\caption{Phase Times: n=164M (seconds)}
+\small
+\begin{tabular}{r|rrrr|r}
+\toprule
+\# Threads & Phase 1 & Phase 2 & Phase 3 & Phase 4 & Total Time \\
+\midrule
+2 & 8.60 & $<$0.01 & 0.20 & 0.63 & 9.55 \\
+4 & 5.02 & $<$0.01 & 0.13 & 1.18 & 6.47 \\
+8 & 2.80 & $<$0.01 & 0.11 & 1.41 & 4.45 \\
+12 & 2.67 & $<$0.01 & 0.13 & 1.34 & 4.29 \\
+16 & 3.17 & $<$0.01 & 0.21 & 1.48 & 5.06 \\
+32 & 3.39 & 0.02 & 0.29 & 1.95 & 5.95 \\
+64 & 2.54 & 0.04 & 0.43 & 3.20 & 6.52 \\
+128 & 2.39 & 0.01 & 0.99 & 11.07 & 15.03 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \end{document}

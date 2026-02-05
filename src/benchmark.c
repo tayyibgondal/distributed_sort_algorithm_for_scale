@@ -172,7 +172,7 @@ int main() {
                    result.p1_time, result.p2_time, result.p3_time, result.p4_time);
             
             // write phase breakdown to file
-            fprintf(phase_file, "%d,%d,%.4f,%.4f,%.4f,%.4f,%.4f\n",
+            fprintf(phase_file, "%d,%d,%.6f,%.6f,%.6f,%.6f,%.6f\n",
                     n, p, result.total_time, 
                     result.p1_time, result.p2_time, result.p3_time, result.p4_time);
         }

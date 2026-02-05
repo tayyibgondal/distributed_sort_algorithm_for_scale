@@ -1,9 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  4 FEB 2026 18:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  4 FEB 2026 20:09
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**report.tex
-(./report.tex
+**/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex
+(/Users/tayyibgondal/Desktop/distributed_parallel_sort/distributed_sort_algorithm_for_scale/docs/report.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -22,18 +23,14 @@ File: size11.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen141
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/geometry/geometry.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/iftex/ifvtex.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
 \Gm@cnth=\count270
@@ -48,28 +45,22 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \Gm@layouthoffset=\dimen148
 \Gm@layoutvoffset=\dimen149
 \Gm@dimlist=\toks18
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/trig.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-def/pdftex.def
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen150
 \Gin@req@width=\dimen151
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen152
 \lightrulewidth=\dimen153
@@ -88,73 +79,54 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count275
 \@lastruleclass=\count276
 \@thisrulewidth=\dimen164
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-))
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hycolor/hycolor.sty
+)) (/usr/local/texlive/2025/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/nameref.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.s
-ty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (/usr/local/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count277
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count278
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
-)
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen165
 \Hy@linkcounter=\count279
 \Hy@pagecounter=\count280
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/pd1enc.def
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-)
-(/usr/local/texlive/2025/texmf-dist/tex/generic/intcalc/intcalc.sty
+) (/usr/local/texlive/2025/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count281
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/puenc.def
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -167,20 +139,16 @@ Package hyperref Info: Backreferencing OFF on input line 4177.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4424.
 \c@Hy@tempcnt=\count282
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/url/url.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4763.
 \XeTeXLinkMargin=\dimen166
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/bitset/bitset.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
-)
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count283
 \Field@Width=\dimen167
@@ -192,8 +160,7 @@ Package hyperref Info: backreferencing OFF on input line 6057.
 Package hyperref Info: Link coloring OFF on input line 6062.
 Package hyperref Info: Link coloring with OCG OFF on input line 6067.
 Package hyperref Info: PDF/A mode OFF on input line 6072.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -202,26 +169,20 @@ package with kernel methods
 \c@Hfootnote=\count286
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hpdftex.def
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2024-11-05 v7.01l Hyperref driver for pdfTeX
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
-kage
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
 \Fld@listcount=\count287
 \c@bookmark@seq@number=\count288
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-85.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
 \Hy@SectionHShift=\skip51
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/float/float.sty
@@ -231,13 +192,11 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box52
 \@float@everytoks=\toks20
 \@floatcapt=\box53
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count290
 \l__pdf_internal_box=\box54
-)
-(./report.aux)
+) (./report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -267,27 +226,27 @@ LaTeX Font Info:    ... okay on input line 8.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
-* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* h-part:(L,W,R)=(54.2025pt, 505.89pt, 54.2025pt)
+* v-part:(T,H,B)=(54.2025pt, 686.56499pt, 54.2025pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=469.75502pt
-* \textheight=650.43001pt
-* \oddsidemargin=0.0pt
-* \evensidemargin=0.0pt
-* \topmargin=-37.0pt
+* \textwidth=505.89pt
+* \textheight=686.56499pt
+* \oddsidemargin=-18.06749pt
+* \evensidemargin=-18.06749pt
+* \topmargin=-55.06749pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=59.0pt
+* \marginparwidth=4.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=10.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
-* \@twocolumnfalse
+* \@twocolumntrue
 * \@twosidefalse
 * \@mparswitchfalse
 * \@reversemarginfalse
@@ -308,16 +267,12 @@ LaTeX Font Info:    ... okay on input line 8.
 \everyMPtoPDFconversion=\toks22
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package hyperref Info: Link coloring OFF on input line 8.
-
-(./report.out) (./report.out)
+ (./report.out) (./report.out)
 \@outlinefile=\write3
 \openout3 = `report.out'.
 
@@ -325,110 +280,197 @@ Package hyperref Info: Link coloring OFF on input line 8.
 
 [1
 
+
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (12.76808pt too wide) in paragraph at lines 50--51
-\OT1/cmr/m/n/10.95 cult to rea-son about. In-stead, I im-ple-mented a cus-tom b
-ar-rier us-ing a com-bi-na-tion of \OT1/cmtt/m/n/10.95 pthread[]mutex[]t
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 78--78
+[]\OT1/cmr/bx/n/14.4 Why This Mat-ters: Lessons
+ []
+
+
+Underfull \hbox (badness 2401) in paragraph at lines 80--80
+[]\OT1/cmr/bx/n/12 More Threads Can Hurt Per-for-
  []
 
 
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.65 
-      [1]
+l.88 \subsection
+                {The Optimal Thread Count Exists} [1
+
+{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 66.
+(Font)              <10.95> on input line 111.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 66.
+(Font)              <8> on input line 111.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 66.
+(Font)              <6> on input line 111.
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+[]\OT1/cmr/m/n/10.95 Albert Armea, ``Us-ing pthread[]barrier
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+\OT1/cmr/m/n/10.95 on Mac OS X,'' []$\OT1/cmtt/m/n/10.95 https : / / blog .
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+\OT1/cmtt/m/n/10.95 albertarmea . com / post / 47089939939 /
+ []
+
+
+Underfull \hbox (badness 7451) in paragraph at lines 113--114
+[]\OT1/cmr/m/n/10.95 GeeksforGeeks, ``qsort() Func-tion in C,''
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
+[]$\OT1/cmtt/m/n/10.95 https : / / www . geeksforgeeks . org / c /
+ []
+
+
+Underfull \hbox (badness 2698) in paragraph at lines 115--116
+[]\OT1/cmr/m/n/10.95 GeeksforGeeks, ``Merge K Sorted Ar-rays,''
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--116
+[]$\OT1/cmtt/m/n/10.95 https : / / www . geeksforgeeks . org / dsa /
+ []
+
 
 
 [2]
-
-[3]
-<../plots/plot_speedup_processors.png, id=66, 634.2897pt x 417.9615pt>
+<../plots/plot_speedup_processors.png, id=92, 689.2149pt x 472.6458pt>
 File: ../plots/plot_speedup_processors.png Graphic file (type png)
 <use ../plots/plot_speedup_processors.png>
-Package pdftex.def Info: ../plots/plot_speedup_processors.png  used on input li
-ne 143.
-(pdftex.def)             Requested size: 399.29463pt x 263.11305pt.
-<../plots/plot_efficiency.png, id=68, 634.2897pt x 418.2024pt>
+Package pdftex.def Info: ../plots/plot_speedup_processors.png  used on input line 127.
+(pdftex.def)             Requested size: 379.4175pt x 260.20119pt.
+<../plots/plot_efficiency.png, id=94, 689.4558pt x 472.6458pt>
 File: ../plots/plot_efficiency.png Graphic file (type png)
 <use ../plots/plot_efficiency.png>
-Package pdftex.def Info: ../plots/plot_efficiency.png  used on input line 149.
-(pdftex.def)             Requested size: 399.29463pt x 263.2647pt.
+Package pdftex.def Info: ../plots/plot_efficiency.png  used on input line 133.
+(pdftex.def)             Requested size: 379.4175pt x 260.10744pt.
+<../plots/plot_phase_breakdown.png, id=95, 1701.2358pt x 1305.9189pt>
+File: ../plots/plot_phase_breakdown.png Graphic file (type png)
+<use ../plots/plot_phase_breakdown.png>
+Package pdftex.def Info: ../plots/plot_phase_breakdown.png  used on input line 139.
+(pdftex.def)             Requested size: 505.89pt x 388.33138pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[3
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.142 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.142 
+       <../plots/plot_speedup_processors.png> <../plots/plot_efficiency.png>]
+<../plots/plot_speedup_vs_ideal.png, id=105, 978.2949pt x 544.9158pt>
+File: ../plots/plot_speedup_vs_ideal.png Graphic file (type png)
+<use ../plots/plot_speedup_vs_ideal.png>
+Package pdftex.def Info: ../plots/plot_speedup_vs_ideal.png  used on input line 145.
+(pdftex.def)             Requested size: 379.4175pt x 211.3356pt.
 
 
 [4
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
- been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.152 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
- been already used, duplicate ignored
+l.149 \newpage
+              
+pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.152 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.152 
-       <../plots/plot_speedup_processors.png>]
-<../plots/plot_speedup_vs_ideal.png, id=78, 923.3697pt x 417.9615pt>
-File: ../plots/plot_speedup_vs_ideal.png Graphic file (type png)
-<use ../plots/plot_speedup_vs_ideal.png>
-Package pdftex.def Info: ../plots/plot_speedup_vs_ideal.png  used on input line
- 155.
-(pdftex.def)             Requested size: 446.26582pt x 202.00317pt.
+l.149 \newpage
+               <../plots/plot_phase_breakdown.png> <../plots/plot_speedup_vs_ideal.png>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 156.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 156.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 [5
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
-s been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.159 \end{document}
+l.252 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.252 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.252 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.252 
+      ]
+
+[6
+pdfTeX warning (ext4): destination with the same identifier (name{table.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.313 \end{document}
                     
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
-s been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{table.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.159 \end{document}
-                     <../plots/plot_efficiency.png> <../plots/plot_speedup_vs_i
-deal.png>] (./report.aux)
+l.313 \end{document}
+                    
+pdfTeX warning (ext4): destination with the same identifier (name{table.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.313 \end{document}
+                    
+pdfTeX warning (ext4): destination with the same identifier (name{table.8}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.313 \end{document}
+                    ] (./report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 555CBEAFFFDF870FDEBDDBA37AEFD7CE;1602.
+(rerunfilecheck)             Checksum: CB963ECA0E28BC45B51BA3D73198357D;2575.
  ) 
 Here is how much of TeX's memory you used:
- 9123 strings out of 473190
- 142431 string characters out of 5715801
- 554761 words of memory out of 5000000
- 32273 multiletter control sequences out of 15000+600000
- 563560 words of font info for 52 fonts, out of 8000000 for 9000
+ 9170 strings out of 473190
+ 143473 string characters out of 5715801
+ 569830 words of memory out of 5000000
+ 32296 multiletter control sequences out of 15000+600000
+ 565199 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,8n,79p,633b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
-usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
-r/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on report.pdf (6 pages, 602994 bytes).
+ 75i,9n,79p,844b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+Output written on report.pdf (7 pages, 1499612 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
- 91 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 96 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 186 PDF objects out of 1000 (max. 8388607)
+ 149 compressed objects within 2 object streams
+ 40 named destinations out of 1000 (max. 500000)
+ 133 words of extra memory for PDF output out of 10000 (max. 10000000)
 
