@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  4 FEB 2026 20:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  4 FEB 2026 20:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -284,12 +284,17 @@ Package hyperref Info: Link coloring OFF on input line 8.
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 
-Underfull \hbox (badness 1478) in paragraph at lines 78--78
+Underfull \hbox (badness 1558) in paragraph at lines 66--67
+\OT1/cmr/m/n/10.95 be-cause more threads mean less work per
+ []
+
+
+Underfull \hbox (badness 1478) in paragraph at lines 76--76
 []\OT1/cmr/bx/n/14.4 Why This Mat-ters: Lessons
  []
 
 
-Underfull \hbox (badness 2401) in paragraph at lines 80--80
+Underfull \hbox (badness 2401) in paragraph at lines 78--78
 []\OT1/cmr/bx/n/12 More Threads Can Hurt Per-for-
  []
 
@@ -299,66 +304,66 @@ Underfull \hbox (badness 2401) in paragraph at lines 80--80
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.88 \subsection
-                {The Optimal Thread Count Exists} [1
+l.85 
+      [1
 
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 111.
+(Font)              <10.95> on input line 109.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 111.
+(Font)              <8> on input line 109.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 111.
+(Font)              <6> on input line 109.
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
 []\OT1/cmr/m/n/10.95 Albert Armea, ``Us-ing pthread[]barrier
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
 \OT1/cmr/m/n/10.95 on Mac OS X,'' []$\OT1/cmtt/m/n/10.95 https : / / blog .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--112
+Underfull \hbox (badness 10000) in paragraph at lines 109--110
 \OT1/cmtt/m/n/10.95 albertarmea . com / post / 47089939939 /
  []
 
 
-Underfull \hbox (badness 7451) in paragraph at lines 113--114
+Underfull \hbox (badness 7451) in paragraph at lines 111--112
 []\OT1/cmr/m/n/10.95 GeeksforGeeks, ``qsort() Func-tion in C,''
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--114
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
 []$\OT1/cmtt/m/n/10.95 https : / / www . geeksforgeeks . org / c /
  []
 
 
-Underfull \hbox (badness 2698) in paragraph at lines 115--116
+Underfull \hbox (badness 2698) in paragraph at lines 113--114
 []\OT1/cmr/m/n/10.95 GeeksforGeeks, ``Merge K Sorted Ar-rays,''
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
 []$\OT1/cmtt/m/n/10.95 https : / / www . geeksforgeeks . org / dsa /
  []
 
 
 
 [2]
-<../plots/plot_speedup_processors.png, id=92, 689.2149pt x 472.6458pt>
+<../plots/plot_speedup_processors.png, id=93, 689.2149pt x 472.6458pt>
 File: ../plots/plot_speedup_processors.png Graphic file (type png)
 <use ../plots/plot_speedup_processors.png>
 Package pdftex.def Info: ../plots/plot_speedup_processors.png  used on input line 127.
 (pdftex.def)             Requested size: 379.4175pt x 260.20119pt.
-<../plots/plot_efficiency.png, id=94, 689.4558pt x 472.6458pt>
+<../plots/plot_efficiency.png, id=95, 689.4558pt x 472.6458pt>
 File: ../plots/plot_efficiency.png Graphic file (type png)
 <use ../plots/plot_efficiency.png>
 Package pdftex.def Info: ../plots/plot_efficiency.png  used on input line 133.
 (pdftex.def)             Requested size: 379.4175pt x 260.10744pt.
-<../plots/plot_phase_breakdown.png, id=95, 1701.2358pt x 1305.9189pt>
+<../plots/plot_phase_breakdown.png, id=96, 1701.2358pt x 1305.9189pt>
 File: ../plots/plot_phase_breakdown.png Graphic file (type png)
 <use ../plots/plot_phase_breakdown.png>
 Package pdftex.def Info: ../plots/plot_phase_breakdown.png  used on input line 139.
@@ -381,7 +386,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has
                                                   \__shipout_drop_firstpage_...
 l.142 
        <../plots/plot_speedup_processors.png> <../plots/plot_efficiency.png>]
-<../plots/plot_speedup_vs_ideal.png, id=105, 978.2949pt x 544.9158pt>
+<../plots/plot_speedup_vs_ideal.png, id=106, 978.2949pt x 544.9158pt>
 File: ../plots/plot_speedup_vs_ideal.png Graphic file (type png)
 <use ../plots/plot_speedup_vs_ideal.png>
 Package pdftex.def Info: ../plots/plot_speedup_vs_ideal.png  used on input line 145.
@@ -456,21 +461,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: CB963ECA0E28BC45B51BA3D73198357D;2575.
+(rerunfilecheck)             Checksum: F9974805A19EA331E1DE39AB4856D62B;2575.
  ) 
 Here is how much of TeX's memory you used:
- 9170 strings out of 473190
- 143473 string characters out of 5715801
+ 9171 strings out of 473190
+ 143479 string characters out of 5715801
  569830 words of memory out of 5000000
  32296 multiletter control sequences out of 15000+600000
  565199 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,844b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,880b,470s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on report.pdf (7 pages, 1499612 bytes).
+Output written on report.pdf (7 pages, 1497120 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 149 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
+ 187 PDF objects out of 1000 (max. 8388607)
+ 150 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  133 words of extra memory for PDF output out of 10000 (max. 10000000)
 

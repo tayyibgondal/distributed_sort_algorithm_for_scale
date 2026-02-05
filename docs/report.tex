@@ -42,11 +42,11 @@
 
 \section{Introduction}
 
-\textbf{Thesis:} Through implementing and experimenting with PSRS, I discovered that \textit{Phase 4 (merge) does not scale with parallelism}---its execution time actually \textit{increases} with thread count, unlike the other phases. While Phase 1 (local sort) speeds up as expected with more threads, Phase 4's cost grows because each thread must merge p partitions from all other threads. At p=128, Phase 4 accounts for 73\% of total execution time (11.07s of 15.03s for 164M elements), making it the fundamental scalability bottleneck in PSRS.
+\textbf{Thesis:} The PSRS algorithm contains an inherent scalability limitation, that is, Phase 4 (merge) exhibits anti-scaling behavior. While Phase 1 (local sort) parallelizes efficiently, Phase 4's cost grows considerably by increasing the number of threads, as each thread must also merge all the p partitions received from all other threads. My experiments confirm this. At p=128, Phase 4 consumes 73\% of total execution time (11.07s of 15.03s for 164M elements) compared to 18.24\% with 4 threads.
 
 \section{Implementation Notes}
 
-The implementation uses the SPMD (Single Program Multiple Data) model where the main thread participates as worker thread 0, spawning p-1 additional threads. All threads execute the same function with different thread IDs. Four barrier synchronization points ensure correctness: after local sorting (Phase 1), after sampling (Phase 2), after partitioning (Phase 3), and after merging (Phase 4). Large arrays are heap-allocated to avoid stack overflow. For Phase 1, I used the standard library \texttt{qsort()} for local sorting. For Phase 4, I implemented a k-way merge since merging pre-sorted partitions is more efficient. Correctness was validated by verifying the output array is sorted after every run.
+The implementation uses the SPMD (Single Program Multiple Data) model where the main thread participates as worker thread 0 and spawns p-1 additional threads. All threads execute the same function with different thread IDs. I ensure correctness of the parallel program by using four barrier synchronization points: after local sorting (Phase 1), after sampling (Phase 2), after partitioning (Phase 3), and after merging (Phase 4). Large arrays are heap-allocated to avoid stack overflow. For Phase 1, I used the standard library \texttt{qsort()} for local sorting. For Phase 4, I implemented a k-way merge since merging pre-sorted partitions is more efficient. Correctness was validated by verifying the output array is sorted after every run.
 
 \section{Experimental Setup}
 
@@ -54,26 +54,24 @@ I tested PSRS on a MacBook Air (Apple M2) with array sizes from 32M to 164M inte
 
 \section{Results}
 
-\subsection{Speedups Peak Then Drops}
+\subsection{Speedup Peaks Then Drops}
 
-Figure 1 shows the central result: speedup increases from p=2 to around p=8--16, then \textit{decreases}. For 64M elements, speedup peaks at 4.25x with 16 threads (Table 2). At p=128, speedup falls to just 1.20x---barely faster than sequential. This pattern holds across all array sizes.
-
-Why does adding threads hurt performance? The phase timing data answers this question.
+Figure 1 clearly shows that speedup increases from p=2 to around p=8 to 16, then drops aggressively as very high threads are employed in the psrs program. For 64M elements, speedup peaks at 4.25x with 16 threads (Table 2). At p=128, speedup falls to just 1.20x. This pattern of decrease in speedup with increasing the number of threads holds across all array sizes. But why does adding threads hurt performance? The phase timing data answers this question.
 
 \subsection{Phase 4 Dominates at High Thread Counts}
 
-Tables 3--8 show execution time broken down by phase. The data reveals a clear pattern:
+Tables 3 to 8 show execution time broken down by phase. The data reveals a clear pattern:
 
 \begin{itemize}
-\item \textbf{Phase 1 (Sort)} decreases as expected---more threads means less work per thread. For 164M elements: 8.60s at p=2 drops to 2.39s at p=128.
-\item \textbf{Phase 4 (Merge)} increases dramatically. For 164M elements: 0.63s at p=2 grows to 11.07s at p=128---an 18x increase.
+\item \textbf{Phase 1 (Sort)} timing decreases as expected because more threads mean less work per thread. For 164M elements, 8.60s at p=2 drops to 2.39s at p=128.
+\item \textbf{Phase 4 (Merge)} timing increases dramatically. For 164M elements: 0.63s at p=2 grows to 11.07s at p=128, an 18x increase.
 \end{itemize}
 
-At p=128 with 164M elements, Phase 4 accounts for 73\% of total execution time (11.07s of 15.03s). The merge phase dominates because each thread must merge p partitions received from all other threads. More threads means more partitions to merge.
+At p=128 with 164M elements, Phase 4 accounts for 73\% of total execution time (11.07s of 15.03s). The merge phase dominates because each thread must merge p partitions received from all other threads. More threads mean more partitions to merge.
 
 \subsection{Efficiency Collapses at Scale}
 
-Figure 2 shows efficiency (E = Speedup/p). At p=2, efficiency is approximately 0.86--0.92 across all sizes---good utilization. At p=128, efficiency drops to 0.008--0.011. This means over 99\% of computational capacity is wasted on overhead when using 128 threads.
+Figure 2 shows efficiency (E = Speedup/p). At p=2, efficiency is approximately 0.86 to 0.92 across all sizes, indicating good utilization. At p=128, efficiency drops to 0.008 to 0.011. This means over 99\% of computational capacity is wasted on overhead when using 128 threads.
 
 \section{Why This Matters: Lessons Learned}
 
@@ -87,19 +85,19 @@ I initially suspected synchronization overhead from barrier waits would limit sc
 
 \subsection{The Optimal Thread Count Exists}
 
-For these problem sizes on this hardware, p=8--16 consistently gives the best speedup. Beyond this, returns are not just diminishing---they become negative. This suggests that blindly maximizing thread count is counterproductive; finding the optimal p requires experimentation.
+For these problem sizes on this hardware, p=8 to 16 consistently gives the best speedup. Beyond this, returns are not just diminishing but become negative. This suggests that blindly maximizing thread count is counterproductive and finding the optimal p requires experimentation.
 
 \subsection{Debugging Parallel Code Is Hard}
 
-A subtle bug in my merge implementation initially produced mostly-sorted output. The array appeared sorted on casual inspection, but full verification revealed errors. Race conditions were difficult to reproduce---a bug might appear once in 20 runs. I learned to always verify correctness programmatically, not visually.
+A subtle bug in my merge implementation initially produced mostly-sorted output. It was a very long array so I did not bother examining full array for correct sort. But later while observing some other outputs, I saw that bug. After this, I wrote test cases to always validate the overall output. I learned to always verify correctness programmatically, not visually. Especially for parallelized code, where it is hard to manually observe bugs.
 
 \subsection{Phase-Level Timing Is Essential}
 
-Without phase-level timing, I would have blamed synchronization or load imbalance for poor scaling. The phase breakdown revealed the true culprit: merge cost. This taught me that aggregate timing hides important details; instrumenting individual phases is necessary to diagnose performance problems.
+Without phase-level timing, I would have blamed synchronization or load imbalance for poor scaling. The phase breakdown revealed the true culprit was merge cost. This taught me that 1) aggregate timing hides important details and 2) instrumenting individual phases is necessary to diagnose performance problems in distributed program implementations.
 
 \section{Conclusion}
 
-My experiments demonstrate that Phase 4 (merge) is the fundamental scalability bottleneck in PSRS. Unlike Phase 1 which benefits from parallelism, Phase 4's cost grows with thread count because each thread must merge p partitions. At p=128, Phase 4 consumes 73\% of total execution time. This explains why peak speedup (4.0--4.3x) occurs at p=8--16 and degrades beyond. The key insight is that PSRS's merge phase has inherent anti-scaling behavior that limits the algorithm's parallel efficiency regardless of problem size.
+My experiments demonstrate that Phase 4 (merge) is the fundamental scalability bottleneck in PSRS. Unlike Phase 1 which benefits from parallelism, Phase 4's cost grows with thread count because each thread must merge p partitions. At p=128, Phase 4 consumes 73\% of total execution time. This explains why peak speedup (4.0 to 4.3x) occurs at p=8 to 16 and degrades beyond. The key insight is that PSRS's merge phase has inherent anti-scaling behavior that limits the algorithm's parallel efficiency regardless of problem size.
 
 \section*{Acknowledgements}
 
@@ -115,6 +113,8 @@ I consulted ChatGPT for help with barrier implementation and k-way merge logic. 
 \item GeeksforGeeks, ``Merge K Sorted Arrays,'' \url{https://www.geeksforgeeks.org/dsa/merge-k-sorted-arrays/}
 
 \item H. Shi and J. Schaeffer, ``Parallel Sorting by Regular Sampling,'' Journal of Parallel and Distributed Computing, vol. 14, no. 4, pp. 361-372, 1992.
+
+\item X. Li, P. Lu, J. Schaeffer, J. Shillington, P. S. Wong, and H. Shi, ``On the Versatility of Parallel Sorting by Regular Sampling,'' Parallel Computing, vol. 19, no. 10, pp. 1079-1103, 1993.
 \end{enumerate}
 
 \newpage
